@@ -1,12 +1,6 @@
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 enum PaymentMethod {
   QRIS = 'qris',
@@ -40,7 +34,7 @@ export class Transaction {
   })
   paymentStatus: PaymentStatus;
 
-  @OneToOne(() => Product, (product) => product.transaction)
+  @ManyToOne(() => Product, (product) => product.transactions)
   product: Product;
 
   @ManyToOne(() => User, (user) => user.transactions)
