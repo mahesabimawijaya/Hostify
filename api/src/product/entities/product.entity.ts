@@ -1,5 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+enum Backup {
+  WEEKLY = 'weekly',
+  DAILY = 'daily',
+}
 
 @Entity()
 export class Product {
@@ -12,27 +17,24 @@ export class Product {
   @Column()
   description: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  price: string;
+  @Column('decimal', { precision: 10, scale: 0 })
+  price: number;
 
-  @Column()
+  @Column('int')
   term: number;
 
-  @Column()
-  totalWebsites: number;
+  @Column('int')
+  totalWeb: number;
 
-  @Column()
-  visit: number;
+  @Column('int')
+  totalVisit: number;
 
-  @Column()
+  @Column('int')
   storage: number;
 
-  @Column()
-  file: number;
+  @Column({ type: 'enum', enum: Backup })
+  backup: Backup;
 
-  @Column()
-  backup: number;
-
-  @OneToMany(() => Transaction, (transaction) => transaction.product)
-  transactions: Transaction[];
+  @OneToOne(() => Transaction, (transaction) => transaction.product)
+  transaction: Transaction;
 }
