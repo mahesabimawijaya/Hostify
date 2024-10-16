@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-enum Backup {
-  WEEKLY = 'weekly',
-  DAILY = 'daily',
+export enum Backup {
+  weekly = 'weekly',
+  daily = 'daily',
 }
 
 @Entity()
