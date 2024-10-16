@@ -10,12 +10,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Backup, Product } from './entities/product.entity';
 import { Not, Repository } from 'typeorm';
 import { response } from 'src/utils/response.util';
+import { Transaction } from 'src/transaction/entities/transaction.entity';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    @InjectRepository(Transaction)
+    private readonly transactionRepository: Repository<Transaction>,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -126,7 +129,31 @@ export class ProductService {
     );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number) {
+    const product = await this.productRepository.findOne({ where: { id } });
+    if (!product) {
+      throw new NotFoundException(
+        response(false, 'Product is not found!', null),
+      );
+    }
+
+    // TODO: add  payment/transaction status
+    const ongoingTransactions = await this.transactionRepository.findOne({
+      where: { product: { id } },
+    });
+
+    if (ongoingTransactions) {
+      throw new ConflictException(
+        response(
+          false,
+          'Cannot delete product with ongoing transactions!',
+          null,
+        ),
+      );
+    }
+
+    await this.productRepository.remove(product);
+
+    return response(true, 'Product has been deleted successfully', null);
   }
 }
