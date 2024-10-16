@@ -12,7 +12,6 @@ import { User, Roles } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { response } from 'src/utils/response.util';
 import { comparePassword, hashPassword } from 'src/lib/bcrypt';
-import { error } from 'console';
 import { LoginUserDto } from './dto/login-user.dto';
 import { createToken } from 'src/lib/jwt';
 
@@ -24,7 +23,7 @@ export class UserService {
   ) {}
 
   async register(createUserDto: CreateUserDto) {
-    const { firstName, lastName, email, password } = createUserDto;
+    const { firstName, lastName, email, password, role } = createUserDto;
 
     if (!firstName || !lastName || !email || !password) {
       throw new BadRequestException(
@@ -54,7 +53,7 @@ export class UserService {
         lastName,
         email,
         password: hashedPassword,
-        role: Roles.USER,
+        role: role ? (role as Roles) : Roles.user,
       });
 
       const registeredUser = await this.userRepository.save(newUser);
