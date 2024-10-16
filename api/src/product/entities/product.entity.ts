@@ -1,5 +1,11 @@
 import { Transaction } from 'src/transaction/entities/transaction.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 enum Backup {
   WEEKLY = 'weekly',
@@ -35,6 +41,6 @@ export class Product {
   @Column({ type: 'enum', enum: Backup })
   backup: Backup;
 
-  @OneToOne(() => Transaction, (transaction) => transaction.product)
-  transaction: Transaction;
+  @OneToMany(() => Transaction, (transaction) => transaction.product)
+  transactions: Transaction[];
 }
