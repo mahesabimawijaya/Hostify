@@ -15,31 +15,36 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
+  // /transaction
   @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
+  async create(@Body() createTransactionDto: CreateTransactionDto) {
     return this.transactionService.create(createTransactionDto);
   }
 
+  // /transaction
   @Get()
-  findAll() {
+  async findAll() {
     return this.transactionService.findAll();
   }
 
+  // /transaction/id
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionService.findOne(+id);
+  async findAllByUserId(@Param('id') id: string) {
+    return this.transactionService.findAllByUserId(+id);
   }
 
+  // /transaction/id
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
   ) {
     return this.transactionService.update(+id, updateTransactionDto);
   }
 
+  // /transaction/id
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionService.remove(+id);
+  async delete(@Param('id') id: string) {
+    return this.transactionService.delete(+id);
   }
 }

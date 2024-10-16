@@ -1,13 +1,19 @@
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-enum PaymentMethod {
+export enum PaymentMethod {
   QRIS = 'qris',
-  BCAVA = 'bcava',
+  BCAVA = 'BCA Virtual Account',
 }
 
-enum PaymentStatus {
+export enum PaymentStatus {
   PENDING = 'pending',
   FAILED = 'failed',
   SUCCESS = 'success',
@@ -21,10 +27,10 @@ export class Transaction {
   @Column()
   term: number;
 
-  @Column()
-  date: Date;
+  @Column('decimal', { precision: 10, scale: 0 })
+  amount: number;
 
-  @Column()
+  @Column({ type: 'enum', enum: PaymentMethod })
   paymentMethod: PaymentMethod;
 
   @Column({
@@ -33,6 +39,9 @@ export class Transaction {
     default: PaymentStatus.PENDING,
   })
   paymentStatus: PaymentStatus;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @ManyToOne(() => Product, (product) => product.transactions)
   product: Product;

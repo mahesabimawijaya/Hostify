@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_landing_page_why_us_sections",
+  "info": {
+    "displayName": "WhyUs Section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "whyUsCard": {
+      "type": "component",
+      "repeatable": true,
+      "required": true,
+      "component": "cards.why-us-card"
+    }
+  }
+}
