@@ -102,4 +102,6 @@ export interface NavbarData {
   logoText: string;
   loginBtn: string;
   signUpBtn: string;
+  linkInfo: string;
+  linkProduct: string;
 }

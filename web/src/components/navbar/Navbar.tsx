@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { NavbarData } from "@/types/asset";
+import React, { useEffect, useState } from "react";
 import { fetchData } from "@/lib/axios";
+import { NavbarData } from "@/types/asset";
+import Image from "next/image";
 import Button from "../ui/Button";
 
 const Navbar: React.FC = () => {
@@ -9,33 +10,30 @@ const Navbar: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("All environment variables:", process.env);
-
-    const fetchAsset = async () => {
+    const fetchNavbarData = async () => {
       try {
-        console.log("start 1");
+        const res = await fetchData("cms", "navbar");
 
-        const token = process.env.NEXT_PUBLIC_STRAPI_TOKEN;
-
-        const res = await fetchData("cms", "navbar", token);
         if (res?.data?.attributes) {
           setNavbarData({
             loginBtn: res.data.attributes.loginBtn,
             signUpBtn: res.data.attributes.signUpBtn,
             logoText: res.data.attributes.logoText,
             logo: res.data.attributes.logo,
+            linkInfo: res.data.attributes.linkInfo,
+            linkProduct: res.data.attributes.linkProduct,
           });
         } else {
-          console.error("Response structure is incorrect or data is missing");
+          console.error("Data is missing");
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchAsset();
+    fetchNavbarData();
   }, []);
 
   if (isLoading) {
@@ -46,21 +44,34 @@ const Navbar: React.FC = () => {
     return <div>No data found</div>;
   }
 
+  // if data undefined, hardcoding img
+  const logoUrl = navbarData.logo?.data?.attributes?.url
+    ? `${process.env.NEXT_PUBLIC_CMS_IMAGE_URL}${navbarData.logo.data.attributes.url}`
+    : "http://localhost:1337/uploads/Logo_2_removebg_preview_795339acdc.png";
+
   return (
-    <nav className="flex items-center justify-between">
-      {navbarData.logo?.data?.attributes?.url && (
-        <div className="flex items-center space-x-2">
-          <img
-            src={navbarData.logo.data.attributes.url}
-            alt={navbarData.logo.data.attributes.name}
-            className="h-10"
-          />
-          <h1 className="text-lg font-bold">{navbarData.logoText}</h1>
+    <nav className=" w-full max-w-[1112px] mx-auto pt-[40px] bg-white">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center">
+          <div className=" relative w-[48px] h-[48px] mr-[10px]">
+            {logoUrl ? (
+              <Image src={logoUrl} fill alt="logo" />
+            ) : (
+              <div>No Logo</div>
+            )}
+          </div>
+          <h1 className="font-extrabold text-[30px] tracking-tight">
+            {navbarData.logoText}
+          </h1>
         </div>
-      )}
-      <div className="flex space-x-4">
-        <Button text={navbarData.loginBtn} stroke={true} />
-        <Button text={navbarData.signUpBtn} stroke={false} />
+        <div className="flex gap-[30px] text-[16px]">
+          <button className="">{navbarData.linkProduct}</button>
+          <button className="">{navbarData.linkInfo}</button>
+          <button className="uppercase text-primary font-bold">
+            {navbarData.loginBtn}
+          </button>
+          <Button text={navbarData.signUpBtn} stroke={false} />
+        </div>
       </div>
     </nav>
   );

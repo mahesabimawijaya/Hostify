@@ -1,12 +1,8 @@
-import Navbar from "@/components/navbar/NavBar";
+"use client";
 import React from "react";
 
 function SuccessPage() {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  );
+  return <></>;
 }
 
 export default SuccessPage;
