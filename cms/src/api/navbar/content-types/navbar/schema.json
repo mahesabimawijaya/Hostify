@@ -31,6 +31,13 @@
     "logoText": {
       "type": "string",
       "required": true
+    },
+    "linkProduct": {
+      "type": "string",
+      "required": true
+    },
+    "linkInfo": {
+      "type": "string"
     }
   }
 }

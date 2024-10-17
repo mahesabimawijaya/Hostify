@@ -840,6 +840,8 @@ export interface ApiNavbarNavbar extends Schema.SingleType {
     loginBtn: Attribute.String & Attribute.Required;
     signUpBtn: Attribute.String & Attribute.Required;
     logoText: Attribute.String & Attribute.Required;
+    linkProduct: Attribute.String & Attribute.Required;
+    linkInfo: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
