@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_cards_why_us_cards",
+  "info": {
+    "displayName": "WhyUs Card"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

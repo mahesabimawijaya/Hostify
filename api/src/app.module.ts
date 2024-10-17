@@ -6,6 +6,8 @@ import { ProductModule } from './product/product.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { JwtModule } from '@nestjs/jwt';
 import { SECRET_KEY } from './configs/config';
+import { MidtransService } from './midtrans/midtrans.service';
+import { MidtransModule } from './midtrans/midtrans.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { SECRET_KEY } from './configs/config';
       secret: SECRET_KEY,
       signOptions: { expiresIn: '1h' },
     }),
+    MidtransModule,
   ],
+  providers: [MidtransService],
 })
 export class AppModule {}
