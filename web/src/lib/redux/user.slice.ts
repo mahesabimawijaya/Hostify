@@ -1,13 +1,9 @@
-// import { User } from '@/models/user.model';
-import { initialUser } from "../initial";
+import { initialUser } from "./initial";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-// import { deleteCookie } from 'cookies-next';
 import { Dispatch } from "@reduxjs/toolkit";
-import { axiosInstance } from "../../axios.config";
-// import { login } from '../slices/user.slice';
-import { User, UserLoginPayload } from "@/models/user.model";
-import { setAuthCookie } from "@/libs/cookie";
+import { User, UserLoginPayload } from "@/types/user";
+import { setAuthCookie } from "../cookie";
 import { deleteCookie, getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 
