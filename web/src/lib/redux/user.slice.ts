@@ -28,20 +28,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const keepLogin = () => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const token = getCookie("access_token");
-      if (token) {
-        const decodedToken = jwtDecode<UserLoginPayload>(token);
-        dispatch(login(decodedToken.user));
-      }
-    } catch (err: any) {
-      deleteCookie("access_token");
-      console.error("Error in keepLogin:", err.message);
-    }
-  };
-};
-
 export const { login, updateProfile, logout } = userSlice.actions;
 export default userSlice.reducer;

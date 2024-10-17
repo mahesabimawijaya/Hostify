@@ -49,15 +49,32 @@ export const userLogin = ({ email, password }: UserLoginPayload) => {
   };
 };
 
+// export const keepLogin = () => {
+//   return async (dispatch: Dispatch) => {
+//     try {
+//       const token = getCookie("access_token");
+//       if (token) {
+//         dispatch(login(jwtDecode(token)));
+//       }
+//     } catch (err: any) {
+//       deleteCookie("access_token");
+//     }
+//   };
+// };
+
 export const keepLogin = () => {
   return async (dispatch: Dispatch) => {
-    try {
-      const token = getCookie("access_token");
-      if (token) {
+    const token = getCookie("access_token"); // Ensure the cookie name matches what you set
+    if (token) {
+      try {
+        // Dispatch the login action with the decoded user information
         dispatch(login(jwtDecode(token)));
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        deleteCookie("access_token"); // Clean up if there's an issue
       }
-    } catch (err: any) {
-      deleteCookie("access_token");
+    } else {
+      deleteCookie("access_token"); // Clean up if no token is found
     }
   };
 };
