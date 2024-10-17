@@ -10,8 +10,10 @@ import Link from "next/link";
 import { AxiosError } from "axios";
 import { useAppDispatch } from "@/app/hooks";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { createData } from "@/lib/axios";
+import Swal from "sweetalert2";
 
-const LoginForm: React.FC = () => {
+const RegisterForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -19,6 +21,8 @@ const LoginForm: React.FC = () => {
   const initialValues = {
     email: "",
     password: "",
+    firstName: "",
+    lastName: "",
   };
 
   const formik = useFormik({
@@ -28,25 +32,35 @@ const LoginForm: React.FC = () => {
         .email("Invalid email address")
         .required("Email is required"),
       password: Yup.string().required("Password is required"),
+      firstName: Yup.string().required("First name is required"),
+      lastName: Yup.string().required("Last name is required"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, formikHelpers) => {
       setIsSubmitting(true);
       try {
-        const result = await dispatch(
-          userLogin({
-            email: values.email,
-            password: values.password,
-          } as UserLoginPayload)
+        const response = await createData(
+          "api",
+          "users/v1",
+          values,
+          "application/json"
         );
-        formik.resetForm();
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
+        console.log(response);
+
+        if (response.status === 201) {
+          await Swal.fire({
+            title: "Successfully Signed Up!",
+            text: "You can now log in.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+
+          router.push("/login");
+        }
       } catch (error) {
         if (error instanceof AxiosError) {
           toast.error(
             error.response?.data.message ||
-              "An error occurred while signing in."
+              "An error occurred while signing up."
           );
         } else {
           toast.error("An unexpected error occurred.");
@@ -64,9 +78,9 @@ const LoginForm: React.FC = () => {
         <Link href="/">
           <img src="/hostify.png" alt="" className="w-14" />
         </Link>
-        <div className="font-bold text-3xl">Welcome back to Hostify</div>
+        <div className="font-bold text-3xl">Sign up to Hostify</div>
         <div className="text-zinc-400">
-          Sign in and choose your perfect hosting!
+          Sign up now and secure your hosting plan!
         </div>
       </div>
 
@@ -77,11 +91,45 @@ const LoginForm: React.FC = () => {
       >
         <div className="form-floating w-full">
           <input
+            type="text"
+            className="form-control mb-2"
+            id="firstName"
+            placeholder="First Name"
+            {...formik.getFieldProps("firstName")}
+          />
+          <label htmlFor="firstName">First Name</label>
+        </div>
+        {formik.touched.firstName && formik.errors.firstName ? (
+          <div className="text-red-700 text-xs mb-3">
+            {formik.errors.firstName}
+          </div>
+        ) : null}
+
+        {/* Last Name */}
+        <div className="form-floating w-full">
+          <input
+            type="text"
+            className="form-control mb-2"
+            id="lastName"
+            placeholder="Last Name"
+            {...formik.getFieldProps("lastName")}
+          />
+          <label htmlFor="lastName">Last Name</label>
+        </div>
+        {formik.touched.lastName && formik.errors.lastName ? (
+          <div className="text-red-700 text-xs mb-3">
+            {formik.errors.lastName}
+          </div>
+        ) : null}
+
+        <div className="form-floating w-full">
+          <input
             type="email"
             className="form-control mb-2"
             id="floatingInput"
             placeholder="name@example.com"
             {...formik.getFieldProps("email")}
+            value={formik.values.email || ""}
           />
           <label htmlFor="floatingInput">Email address</label>
         </div>
@@ -96,6 +144,7 @@ const LoginForm: React.FC = () => {
             id="floatingPassword"
             placeholder="•••••••"
             {...formik.getFieldProps("password")}
+            value={formik.values.password || ""}
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>
@@ -109,24 +158,25 @@ const LoginForm: React.FC = () => {
           <button
             className="bg-[#6C41FF] text-white hover:bg-white hover:text-[#6C41FF] border border-primary text-bold uppercase duration-150 w-[154px] h-[52px] rounded"
             disabled={!formik.isValid}
+            type="submit"
           >
-            SIGN IN
+            Submit
           </button>
         </div>
       </form>
 
       {/* REGISTER LINK */}
       <div className="text-sm flex flex-row gap-1">
-        <div>Don&apos;t have account?</div>
+        <div>Already have an account?</div>
         <Link
-          href="/register"
+          href="/login"
           className="font-semibold text-[#6C41FF] no-underline"
         >
-          Register here
+          Log in here
         </Link>
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

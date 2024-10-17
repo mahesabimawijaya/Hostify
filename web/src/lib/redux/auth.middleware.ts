@@ -17,15 +17,10 @@ export const userLogin = ({ email, password }: UserLoginPayload) => {
         { withCredentials: true }
       );
 
-      console.log(response.headers); // Debug: Lihat header respons
-      console.log(document.cookie);
-
       if (response.data.success) {
         const { data } = response.data;
-        console.log("User data:", data);
 
         const access_token = getCookie("access-token") || "";
-        console.log("Access token:", access_token);
 
         if (access_token) {
           const user: User = jwtDecode(access_token);
