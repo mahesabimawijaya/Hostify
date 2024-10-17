@@ -1,5 +1,5 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { createAxiosInstance } from "../axios";
+import { createAxiosInstance, createData } from "../axios";
 import axios, { AxiosError } from "axios";
 import { login } from "./user.slice";
 import { User, UserLoginPayload } from "@/types/user";
@@ -11,31 +11,30 @@ export const userLogin = ({ email, password }: UserLoginPayload) => {
   return async (dispatch: Dispatch) => {
     try {
       const api = createAxiosInstance("api");
-      // TODO: endpoint BE validate blm ada
       const response = await api.post(
-        "api/users/v3",
+        "users/login",
         { email, password },
         { withCredentials: true }
       );
 
-      const access_token = getCookie("access-token") || "";
-      console.log(access_token);
+      console.log(response.headers); // Debug: Lihat header respons
+      console.log(document.cookie);
 
-      if (response.data) {
-        const { role, url } = response.data;
-        console.log("Role from response:", role);
+      if (response.data.success) {
+        const { data } = response.data;
+        console.log("User data:", data);
 
-        if (role === "admin") {
-          // TODO: handle response
-          return;
-        }
+        const access_token = getCookie("access-token") || "";
+        console.log("Access token:", access_token);
 
         if (access_token) {
           const user: User = jwtDecode(access_token);
           dispatch(login(user));
         }
 
-        return { role, url };
+        return { role: data.role, message: response.data.message };
+      } else {
+        toast.error(response.data.message || "An unexpected error occurred.");
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {

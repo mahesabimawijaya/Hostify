@@ -4,10 +4,22 @@ import { fetchData } from "@/lib/axios";
 import { NavbarData } from "@/types/asset";
 import Image from "next/image";
 import Button from "../ui/Button";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { logout } from "@/lib/redux/user.slice";
+import { User } from "@/types/user";
 
 const Navbar: React.FC = () => {
   const [navbarData, setNavbarData] = useState<NavbarData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
+  const loggedinUser = useAppSelector((state) => state.auth) as User;
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   useEffect(() => {
     const fetchNavbarData = async () => {
@@ -41,7 +53,7 @@ const Navbar: React.FC = () => {
   }
 
   if (!navbarData) {
-    return <div>No data found</div>;
+    return <div>No data</div>;
   }
 
   // if data undefined, hardcoding img
@@ -67,10 +79,29 @@ const Navbar: React.FC = () => {
         <div className="flex gap-[30px] text-[16px]">
           <button className="">{navbarData.linkProduct}</button>
           <button className="">{navbarData.linkInfo}</button>
-          <button className="uppercase text-primary font-bold">
-            {navbarData.loginBtn}
-          </button>
-          <Button text={navbarData.signUpBtn} stroke={false} />
+
+          {loggedinUser.firstName ? (
+            <div className="flex items-center gap-[30px]">
+              <button
+                className="uppercase text-primary font-bold"
+                onClick={handleLogout}
+              >
+                Log Out
+              </button>
+              <Button text={"DASHBOARD"} stroke={false} />
+            </div>
+          ) : (
+            <>
+              {" "}
+              <button
+                className="uppercase text-primary font-bold"
+                onClick={() => router.push("/login")}
+              >
+                {navbarData.loginBtn}
+              </button>
+              <Button text={navbarData.signUpBtn} stroke={false} />
+            </>
+          )}
         </div>
       </div>
     </nav>
