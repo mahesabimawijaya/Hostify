@@ -27,7 +27,6 @@ export class TransactionController {
     return this.transactionService.handlePaymentNotification(notification);
   }
 
-
   // /transaction
   @Get()
   async findAll() {
