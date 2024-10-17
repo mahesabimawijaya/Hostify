@@ -4,6 +4,8 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { MidtransService } from './midtrans/midtrans.service';
+import { MidtransModule } from './midtrans/midtrans.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { TransactionModule } from './transaction/transaction.module';
     UserModule,
     ProductModule,
     TransactionModule,
+    MidtransModule,
   ],
+  providers: [MidtransService],
 })
 export class AppModule {}

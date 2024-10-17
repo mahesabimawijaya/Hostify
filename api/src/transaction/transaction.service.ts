@@ -11,7 +11,8 @@ import { User } from 'src/user/entities/user.entity';
 import { Product } from 'src/product/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Transaction } from './entities/transaction.entity';
+import { PaymentStatus, Transaction } from './entities/transaction.entity';
+import { MidtransService } from 'src/midtrans/midtrans.service';
 
 @Injectable()
 export class TransactionService {
@@ -22,6 +23,9 @@ export class TransactionService {
     private readonly productsRepository: Repository<Product>,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+
+    private readonly midtransService: MidtransService, // Inject Midtrans Service
+
   ) {}
 
   //create
@@ -60,9 +64,24 @@ export class TransactionService {
       Object.assign(transaction, createTransactionDto);
       transaction.product = existedProduct;
       transaction.user = existedUser;
-      const result = await this.transactionsRepository.save(transaction);
 
-      return response(true, 'Product created successfully', result);
+      const savedTransaction =
+        await this.transactionsRepository.save(transaction);
+
+      const payment = await this.midtransService.createPayment(
+        savedTransaction.id.toString(), // Use the savedTransaction ID as the Midtrans order ID
+        savedTransaction.amount,
+        {
+          email: existedUser.email,
+          firstName: existedUser.firstName,
+          lastName: existedUser.lastName,
+        },
+      );
+      return response(true, 'Transaction created successfully', {
+        paymentUrl: payment.redirect_url,
+        transaction: savedTransaction,
+      });
+
     } catch (error) {
       console.error('Error creating product:', error);
 
@@ -160,6 +179,31 @@ export class TransactionService {
 
       throw new InternalServerErrorException('An unexpected error occurred');
     }
+  }
+
+  //midtrans
+  async handlePaymentNotification(notification: any) {
+    const { order_id, transaction_status } = notification;
+
+    const transaction = await this.transactionsRepository.findOne({
+      where: { id: +order_id },
+    });
+
+    if (!transaction) {
+      throw new NotFoundException('Transaction not found');
+    }
+
+    if (transaction_status === 'settlement') {
+      transaction.paymentStatus = PaymentStatus.SUCCESS;
+    } else if (transaction_status === 'pending') {
+      transaction.paymentStatus = PaymentStatus.PENDING;
+    } else {
+      transaction.paymentStatus = PaymentStatus.FAILED;
+    }
+
+    await this.transactionsRepository.save(transaction);
+    return { message: 'Transaction status updated' };
+
   }
 
   async delete(id: number) {

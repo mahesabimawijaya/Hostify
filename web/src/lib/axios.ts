@@ -1,15 +1,26 @@
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+const getBaseUrl = (baseUrlType: "cms" | "api") => {
+  if (baseUrlType === "cms") {
+    return process.env.NEXT_PUBLIC_CMS_URL;
+  } else if (baseUrlType === "api") {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  throw new Error("Invalid base URL type");
+};
 
-const api = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-});
+const createAxiosInstance = (baseUrlType: "cms" | "api") => {
+  const baseURL = getBaseUrl(baseUrlType);
+  return axios.create({
+    baseURL,
+    withCredentials: true,
+  });
+};
 
 //create
-export const createData = async (endpoint: string, data: unknown, contentType: string) => {
+export const createData = async (baseUrlType: "cms" | "api", endpoint: string, data: unknown, contentType: string) => {
   try {
+    const api = createAxiosInstance(baseUrlType);
     const response = await api.post(endpoint, data, {
       headers: {
         "Content-Type": contentType,
@@ -23,8 +34,9 @@ export const createData = async (endpoint: string, data: unknown, contentType: s
 };
 
 //read
-export const fetchData = async (endpoint: string) => {
+export const fetchData = async (baseUrlType: "cms" | "api", endpoint: string) => {
   try {
+    const api = createAxiosInstance(baseUrlType);
     const response = await api.get(endpoint);
     return response.data;
   } catch (error) {
@@ -34,8 +46,9 @@ export const fetchData = async (endpoint: string) => {
 };
 
 //update
-export const updateData = async (endpoint: string, data: unknown, contentType: string) => {
+export const updateData = async (baseUrlType: "cms" | "api", endpoint: string, data: unknown, contentType: string) => {
   try {
+    const api = createAxiosInstance(baseUrlType);
     const response = await api.patch(endpoint, data, {
       headers: {
         "Content-Type": contentType,
@@ -49,8 +62,9 @@ export const updateData = async (endpoint: string, data: unknown, contentType: s
 };
 
 //archive
-export const archiveData = async (endpoint: string) => {
+export const archiveData = async (baseUrlType: "cms" | "api", endpoint: string) => {
   try {
+    const api = createAxiosInstance(baseUrlType);
     const response = await api.put(endpoint, {
       archived: true,
     });
@@ -62,8 +76,9 @@ export const archiveData = async (endpoint: string) => {
 };
 
 //delete
-export const deleteData = async (endpoint: string) => {
+export const deleteData = async (baseUrlType: "cms" | "api", endpoint: string) => {
   try {
+    const api = createAxiosInstance(baseUrlType);
     const response = await api.delete(endpoint);
     return response;
   } catch (error) {
