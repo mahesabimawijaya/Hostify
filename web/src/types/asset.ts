@@ -13,8 +13,8 @@ export interface PurpleAttributes {
   updatedAt: Date;
   publishedAt: Date;
   heroSection: IHeroSection;
-  whyUsSection: PricingSection;
-  pricingSection: PricingSection;
+  whyUsSection: IWhyUsSection;
+  pricingSection: IPricingSection;
 }
 
 export interface IHeroSection {
@@ -74,12 +74,11 @@ export interface Large {
   sizeInBytes: number;
 }
 
-export interface PricingSection {
+export interface IPricingSection {
   id: number;
   title: string;
   description: string;
-  purchaseBtn?: string;
-  whyUsCard?: PricingSection[];
+  purchaseBtn: string;
 }
 
 export type Meta = object;
@@ -88,10 +87,10 @@ export interface IWhyUsSection {
   id: number;
   title: string;
   description: string;
-  whyUsCard: whyUsCard[];
+  whyUsCard: IWhyUsCard[];
 }
 
-export interface whyUsCard {
+export interface IWhyUsCard {
   id: number;
   title: string;
   description: string;
