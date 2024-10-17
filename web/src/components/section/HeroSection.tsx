@@ -9,7 +9,7 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ heroSection }) => {
   const imageUrl = "http://localhost:1337" + heroSection.image.data.attributes.formats.large.url;
   return (
-    <section className="w-full h-screen flex items-center max-w-[1112px] mx-auto pt-[60px]">
+    <section className="w-full h-screen flex items-center max-w-[1112px] mx-auto pt-[60px] mb-10">
       <div className="flex flex-col">
         <h1 className="text-5xl font-semibold w-[505px] leading-[55px]">{heroSection.title}</h1>
         <p className="text-lg w-[414px] my-5 ">{heroSection.description}</p>

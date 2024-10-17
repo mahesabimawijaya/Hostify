@@ -1,11 +1,5 @@
 import { Transaction } from 'src/transaction/entities/transaction.entity';
-import {
-  Column,
-  Entity,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum Backup {
   weekly = 'weekly',
