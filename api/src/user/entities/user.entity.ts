@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
 
-enum Roles {
-  Admin = 'admin',
-  User = 'user',
+export enum Roles {
+  admin = 'admin',
+  user = 'user',
 }
 
 @Entity()

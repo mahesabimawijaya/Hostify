@@ -25,7 +25,6 @@ export class TransactionService {
     private readonly usersRepository: Repository<User>,
 
     private readonly midtransService: MidtransService, // Inject Midtrans Service
-
   ) {}
 
   //create
@@ -81,7 +80,6 @@ export class TransactionService {
         paymentUrl: payment.redirect_url,
         transaction: savedTransaction,
       });
-
     } catch (error) {
       console.error('Error creating product:', error);
 
@@ -203,7 +201,6 @@ export class TransactionService {
 
     await this.transactionsRepository.save(transaction);
     return { message: 'Transaction status updated' };
-
   }
 
   async delete(id: number) {
