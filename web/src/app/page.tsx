@@ -3,7 +3,7 @@
 import Navbar from "@/components/navbar/Navbar";
 import HeroSection from "@/components/section/HeroSection";
 import PricingSection from "@/components/section/PricingSection";
-import WhyUsSection from "@/components/section/WhyUsSection";
+// import WhyUsSection from "@/components/section/WhyUsSection";
 import Loading from "@/components/ui/Loading";
 import { fetchData } from "@/lib/axios";
 import {
@@ -38,7 +38,7 @@ export default function Home() {
     <>
       <Navbar />
       <HeroSection heroSection={asset?.heroSection as IHeroSection} />
-      <WhyUsSection whyUsSection={asset?.whyUsSection as IWhyUsSection} />
+      {/* <WhyUsSection whyUsSection={asset?.whyUsSection as IWhyUsSection} /> */}
       <PricingSection
         pricingSection={asset?.pricingSection as IPricingSection}
       />
