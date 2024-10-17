@@ -21,6 +21,12 @@ export class TransactionController {
     return this.transactionService.create(createTransactionDto);
   }
 
+  // /transaction/notification
+  @Post('notification')
+  async handleNotification(@Body() notification: any) {
+    return this.transactionService.handlePaymentNotification(notification);
+  }
+
   // /transaction
   @Get()
   async findAll() {
