@@ -10,18 +10,6 @@ export interface ListList extends Schema.Component {
   };
 }
 
-export interface CardsWhyUsCard extends Schema.Component {
-  collectionName: 'components_cards_why_us_cards';
-  info: {
-    displayName: 'WhyUs Card';
-  };
-  attributes: {
-    image: Attribute.Media<'images'> & Attribute.Required;
-    title: Attribute.String & Attribute.Required;
-    description: Attribute.Text & Attribute.Required;
-  };
-}
-
 export interface LandingPageWhyUsSection extends Schema.Component {
   collectionName: 'components_landing_page_why_us_sections';
   info: {
@@ -64,14 +52,26 @@ export interface LandingPageHeroSection extends Schema.Component {
   };
 }
 
+export interface CardsWhyUsCard extends Schema.Component {
+  collectionName: 'components_cards_why_us_cards';
+  info: {
+    displayName: 'WhyUs Card';
+  };
+  attributes: {
+    image: Attribute.Media<'images'> & Attribute.Required;
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text & Attribute.Required;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'list.list': ListList;
-      'cards.why-us-card': CardsWhyUsCard;
       'landing-page.why-us-section': LandingPageWhyUsSection;
       'landing-page.pricing-section': LandingPagePricingSection;
       'landing-page.hero-section': LandingPageHeroSection;
+      'cards.why-us-card': CardsWhyUsCard;
     }
   }
 }

@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { User } from "@/types/user";
 import { logout } from "@/lib/redux/user.slice";
+import Image from "next/image";
 
 const Profile = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -68,16 +69,13 @@ const Profile = () => {
           </button>
         </div>
         <hr />
-        <div className="flex flex-col mt-5">
-          <div className="flex items-center">
-            <p className="w-[120px] text-gray-700">Username</p>
-            <p className="text-gray-700">:</p>
-            <h4 className="text-lg ml-3">{loggedinUser.firstName + " " + loggedinUser.lastName}</h4>
+        <div className="flex items-center mt-5 bg-white p-6 rounded-full shadow-lg">
+          <div className="relative w-20 h-20">
+            <Image src={"/profile-user.png"} fill alt="profile" />
           </div>
-          <div className="flex items-center">
-            <p className="w-[120px] text-gray-700">email</p>
-            <p className="text-gray-700">:</p>
-            <h4 className="text-lg ml-3">{loggedinUser.email}</h4>
+          <div className="flex flex-col ml-4">
+            <h3 className="text-xl font-semibold">{loggedinUser.firstName + " " + loggedinUser.lastName}</h3>
+            <h4 className="text-gray-500">{loggedinUser.email}</h4>
           </div>
         </div>
         <h1 className="text-3xl mb-5 mt-14">Your Transaction History</h1>
@@ -116,7 +114,7 @@ const Profile = () => {
                 {isActive && (
                   <div id="filter-dropdown" className="absolute bg-white rounded border shadow-md top-[60px] right-4">
                     {products.map((product, i) => (
-                      <Link key={i} href={`?product=${product.id}`}>
+                      <Link scroll={false} key={i} href={`?product=${product.id}`}>
                         <p
                           onClick={() => {
                             setIsActive(false);

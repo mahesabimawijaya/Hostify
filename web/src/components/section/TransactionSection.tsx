@@ -84,7 +84,7 @@ const TransactionSection = () => {
                 {isActive && (
                   <div id="filter-dropdown" className="absolute bg-white rounded border shadow-md top-[60px] right-4">
                     {products.map((product, i) => (
-                      <Link key={i} href={`?product=${product.id}`}>
+                      <Link scroll={false} key={i} href={`?product=${product.id}`}>
                         <p
                           onClick={() => {
                             setIsActive(false);
