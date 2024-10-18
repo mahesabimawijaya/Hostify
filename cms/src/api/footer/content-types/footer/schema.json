@@ -27,7 +27,7 @@
     "iconEmail": {
       "type": "media",
       "multiple": false,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images"
       ]
@@ -74,18 +74,27 @@
       "required": true
     },
     "socialOne": {
-      "allowedTypes": [
-        "images"
-      ],
-      "type": "media",
-      "multiple": false
-    },
-    "socialTwo": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "socialTwo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "aboutUsTitle": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
       "required": true
     }
   }

@@ -46,10 +46,10 @@ const TransactionSection = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <section className="bg-gray-100  p-3 sm:p-5 xl:pb-[300px]">
-      <div className="mx-auto max-w-screen-xl px-4 lg:px-12 pt-[90px]">
-        <h1 className="text-3xl mb-5">Admin Dashboard</h1>
-        <hr />
+    <section className=" bg-[#F7F3FF] p-3 sm:p-5 xl:pb-[300px]">
+      <div className="mx-auto max-w-screen-xl px-4 lg:px-12 pt-16">
+        <h1 className="font-semibold text-xl">All transactions</h1>
+        {/* <hr /> */}
         {/* start coding here */}
         <div className="bg-white  relative shadow-xl sm:rounded-lg overflow-hidden mt-5">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -68,7 +68,7 @@ const TransactionSection = () => {
                     setIsActive(!isActive);
                   }}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-4 w-4 mr-2 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="h-4 w-4 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                     <path
                       fillRule="evenodd"
                       d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"

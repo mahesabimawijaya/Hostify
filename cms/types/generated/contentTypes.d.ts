@@ -802,7 +802,7 @@ export interface ApiFooterFooter extends Schema.SingleType {
   attributes: {
     logoText: Attribute.String & Attribute.Required;
     logo: Attribute.Media<'images'> & Attribute.Required;
-    iconEmail: Attribute.Media<'images'>;
+    iconEmail: Attribute.Media<'images'> & Attribute.Required;
     email: Attribute.String & Attribute.Required;
     iconPhone: Attribute.Media<'images'> & Attribute.Required;
     phone: Attribute.String;
@@ -814,6 +814,8 @@ export interface ApiFooterFooter extends Schema.SingleType {
     area: Attribute.String & Attribute.Required;
     socialOne: Attribute.Media<'images'>;
     socialTwo: Attribute.Media<'images'> & Attribute.Required;
+    aboutUsTitle: Attribute.String & Attribute.Required;
+    description: Attribute.Text & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

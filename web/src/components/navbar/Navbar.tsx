@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "@/lib/axios";
 import { NavbarData } from "@/types/asset";
 import Image from "next/image";
-// import Button from "../ui/Button";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { logout } from "@/lib/redux/user.slice";
@@ -48,13 +47,13 @@ const Navbar: React.FC = () => {
     fetchNavbarData();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (!navbarData) {
-    return <div>No data</div>;
-  }
+  // if (!navbarData) {
+  //   return <div>No data</div>;
+  // }
 
   // if image undefined, hardcoding img
   const logoUrl = navbarData?.logo?.data?.attributes?.url ? `${process.env.NEXT_PUBLIC_CMS_IMAGE_URL}${navbarData.logo.data.attributes.url}` : "/hostify.png";
@@ -66,11 +65,11 @@ const Navbar: React.FC = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <div className=" relative w-[48px] h-[48px] mr-[10px]">{logoUrl ? <Image src={logoUrl} fill alt="logo" /> : <div>No Logo</div>}</div>
-          <h1 className="font-extrabold text-[30px] tracking-tight">{navbarData.logoText}</h1>
+          <h1 className="font-extrabold text-[30px] tracking-tight">{navbarData?.logoText}</h1>
         </div>
         <div className="flex gap-[30px] text-[16px]">
-          <button className="">{navbarData.linkProduct}</button>
-          <button className="">{navbarData.linkInfo}</button>
+          <button className="">{navbarData?.linkProduct}</button>
+          <button className="">{navbarData?.linkInfo}</button>
 
           {loggedinUser.firstName ? (
             <div className="flex items-center gap-[30px]">
@@ -78,22 +77,28 @@ const Navbar: React.FC = () => {
                 Log Out
               </button>
               <button
-                onClick={() => router.push("/dashboard")}
-                className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary text-bold uppercase duration-150 rounded p-3"
+                onClick={() => {
+                  if (loggedinUser?.role === "admin") {
+                    router.push("/dashboard");
+                  } else {
+                    router.push("/profile");
+                  }
+                }}
+                className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary font-bold uppercase duration-150 rounded p-3"
               >
-                Dashboard
+                {loggedinUser?.role === "admin" ? "Dashboard" : "Profile"}{" "}
               </button>
             </div>
           ) : (
             <>
               <button className="uppercase text-primary font-bold" onClick={() => router.push("/login")}>
-                {navbarData.loginBtn}
+                {navbarData?.loginBtn}
               </button>
               <button
                 onClick={() => router.push("/register")}
                 className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary text-bold uppercase duration-150 rounded p-3"
               >
-                {navbarData.signUpBtn}
+                {navbarData?.signUpBtn}
               </button>
             </>
           )}

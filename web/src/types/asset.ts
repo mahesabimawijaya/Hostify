@@ -105,3 +105,27 @@ export interface NavbarData {
   linkInfo: string;
   linkProduct: string;
 }
+
+export interface FooterData {
+  logo: Image;
+  logoText: string;
+  description: string;
+  iconEmail: Image;
+  email: string;
+  iconPhone: Image;
+  phone: string;
+  titleService: string;
+  aboutUsTitle: string;
+  addressTitle: string;
+  street: string;
+  area: string;
+  socialOne: Image;
+  socialTwo: Image;
+  aboutUsList: List[];
+  serviceList: List[];
+}
+
+export interface List {
+  id: number;
+  list: string;
+}

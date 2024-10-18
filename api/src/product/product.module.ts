@@ -22,12 +22,10 @@ import { SECRET_KEY } from 'src/configs/config';
 })
 export class ProductModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware, AdminMiddleware)
-      .forRoutes(
-        { path: 'products', method: RequestMethod.POST },
-        { path: 'products/:id', method: RequestMethod.PATCH },
-        { path: 'products/:id', method: RequestMethod.DELETE },
-      );
+    consumer.apply(AuthMiddleware, AdminMiddleware).forRoutes(
+      { path: 'products', method: RequestMethod.POST },
+      { path: 'products/:id', method: RequestMethod.PATCH },
+      // { path: 'products/:id', method: RequestMethod.DELETE },
+    );
   }
 }
