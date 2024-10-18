@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "@/lib/axios";
 import { NavbarData } from "@/types/asset";
 import Image from "next/image";
-import Button from "../ui/Button";
+// import Button from "../ui/Button";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { logout } from "@/lib/redux/user.slice";
@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const fetchNavbarData = async () => {
       try {
-        const res = await fetchData("cms", "navbar");
+        const res = await fetchData("cms", "navbar?populate[logo][fields]=url");
 
         if (res?.data?.attributes) {
           setNavbarData({
@@ -56,10 +56,12 @@ const Navbar: React.FC = () => {
     return <div>No data</div>;
   }
 
-  // if data undefined, hardcoding img
-  const logoUrl = navbarData.logo?.data?.attributes?.url
+  // if image undefined, hardcoding img
+  const logoUrl = navbarData?.logo?.data?.attributes?.url
     ? `${process.env.NEXT_PUBLIC_CMS_IMAGE_URL}${navbarData.logo.data.attributes.url}`
-    : "http://localhost:1337/uploads/Logo_2_removebg_preview_795339acdc.png";
+    : "/hostify.png";
+
+  // console.log(logoUrl);
 
   return (
     <nav className=" w-full max-w-[1112px] mx-auto pt-[40px] bg-white">
@@ -88,18 +90,27 @@ const Navbar: React.FC = () => {
               >
                 Log Out
               </button>
-              <Button text={"DASHBOARD"} stroke={false} />
+              <button
+                onClick={() => router.push("/dashboard")}
+                className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary text-bold uppercase duration-150 rounded p-3"
+              >
+                Dashboard
+              </button>
             </div>
           ) : (
             <>
-              {" "}
               <button
                 className="uppercase text-primary font-bold"
                 onClick={() => router.push("/login")}
               >
                 {navbarData.loginBtn}
               </button>
-              <Button text={navbarData.signUpBtn} stroke={false} />
+              <button
+                onClick={() => router.push("/register")}
+                className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary text-bold uppercase duration-150 rounded p-3"
+              >
+                {navbarData.signUpBtn}
+              </button>
             </>
           )}
         </div>

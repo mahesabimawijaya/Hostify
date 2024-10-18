@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className=" mx-auto text-center py-20 px-10 gap-4 flex flex-col items-center justify-center ">
-      {/* HEADER */}
+      {/* header */}
       <div className="gap-2 flex items-center justify-center flex-col">
         <Link href="/">
           <img src="/hostify.png" alt="" className="w-14" />
@@ -70,7 +70,7 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
 
-      {/* FORM */}
+      {/* form */}
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-60 lg:w-[500px] "
@@ -115,7 +115,7 @@ const LoginForm: React.FC = () => {
         </div>
       </form>
 
-      {/* REGISTER LINK */}
+      {/* register link */}
       <div className="text-sm flex flex-row gap-1">
         <div>Don&apos;t have account?</div>
         <Link

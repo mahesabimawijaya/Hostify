@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import HeroSection from "@/components/section/HeroSection";
 import PricingSection from "@/components/section/PricingSection";
@@ -42,6 +43,7 @@ export default function Home() {
       <PricingSection
         pricingSection={asset?.pricingSection as IPricingSection}
       />
+      <Footer />
     </>
   );
 }

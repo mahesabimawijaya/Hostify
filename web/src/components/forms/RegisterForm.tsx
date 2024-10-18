@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import { userLogin } from "@/lib/redux/auth.middleware";
 import { toast } from "react-toastify";
-import { UserLoginPayload } from "@/types/user";
 import Link from "next/link";
 import { AxiosError } from "axios";
 import { useAppDispatch } from "@/app/hooks";
@@ -73,7 +71,7 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div className=" mx-auto text-center py-20 px-10 gap-4 flex flex-col items-center justify-center ">
-      {/* HEADER */}
+      {/* header */}
       <div className="gap-2 flex items-center justify-center flex-col">
         <Link href="/">
           <img src="/hostify.png" alt="" className="w-14" />
@@ -84,7 +82,7 @@ const RegisterForm: React.FC = () => {
         </div>
       </div>
 
-      {/* FORM */}
+      {/* form */}
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-60 lg:w-[500px] "
@@ -165,7 +163,7 @@ const RegisterForm: React.FC = () => {
         </div>
       </form>
 
-      {/* REGISTER LINK */}
+      {/* login link */}
       <div className="text-sm flex flex-row gap-1">
         <div>Already have an account?</div>
         <Link
