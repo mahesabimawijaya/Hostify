@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { User } from "@/types/user";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const getAuthCookie = (name: string) => {
@@ -34,11 +34,5 @@ export const setRouteCookie = (pathname: string) => {
 
   const checkPath = paths.find((p) => p == pathname);
 
-  if (!checkPath)
-    setCookie("path", pathname, {
-      maxAge: 60 * 60,
-      secure: true,
-      domain: "purwadhikabootcamp.com",
-      sameSite: "strict",
-    });
+  if (!checkPath) setCookie("path", pathname);
 };

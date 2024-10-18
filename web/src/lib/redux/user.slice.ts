@@ -1,11 +1,11 @@
 import { initialUser } from "./initial";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Dispatch } from "@reduxjs/toolkit";
 import { User, UserLoginPayload } from "@/types/user";
-import { setAuthCookie } from "../cookie";
 import { deleteCookie, getCookie } from "cookies-next";
-import { jwtDecode } from "jwt-decode";
+// import { Dispatch } from "@reduxjs/toolkit";
+// import { setAuthCookie } from "../cookie";
+// import { jwtDecode } from "jwt-decode";
 
 export const userSlice = createSlice({
   name: "auth",

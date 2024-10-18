@@ -12,7 +12,7 @@ export const userLogin = ({ email, password }: UserLoginPayload) => {
     try {
       const api = createAxiosInstance("api");
       const response = await api.post(
-        "users/login",
+        "users/v2",
         { email, password },
         { withCredentials: true }
       );
@@ -58,17 +58,16 @@ export const userLogin = ({ email, password }: UserLoginPayload) => {
 
 export const keepLogin = () => {
   return async (dispatch: Dispatch) => {
-    const token = getCookie("access_token"); // Ensure the cookie name matches what you set
+    const token = getCookie("access_token");
     if (token) {
       try {
-        // Dispatch the login action with the decoded user information
         dispatch(login(jwtDecode(token)));
       } catch (error) {
         console.error("Error decoding token:", error);
-        deleteCookie("access_token"); // Clean up if there's an issue
+        deleteCookie("access_token");
       }
     } else {
-      deleteCookie("access_token"); // Clean up if no token is found
+      deleteCookie("access_token");
     }
   };
 };
