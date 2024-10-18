@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -29,8 +30,8 @@ export class TransactionController {
 
   // /transaction
   @Get()
-  async findAll() {
-    return this.transactionService.findAll();
+  async findAll(@Query() query: any) {
+    return this.transactionService.findAll(query);
   }
 
   // /transaction/id

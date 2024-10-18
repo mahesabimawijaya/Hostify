@@ -8,11 +8,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-export enum PaymentMethod {
-  QRIS = 'qris',
-  BCAVA = 'BCA Virtual Account',
-}
-
 export enum PaymentStatus {
   PENDING = 'pending',
   FAILED = 'failed',
@@ -30,8 +25,8 @@ export class Transaction {
   @Column('decimal', { precision: 10, scale: 0 })
   amount: number;
 
-  @Column({ type: 'enum', enum: PaymentMethod })
-  paymentMethod: PaymentMethod;
+  @Column({ nullable: true })
+  paymentMethod: string | null;
 
   @Column({
     type: 'enum',

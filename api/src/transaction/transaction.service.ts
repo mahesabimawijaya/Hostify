@@ -30,10 +30,9 @@ export class TransactionService {
   //create
   async create(createTransactionDto: CreateTransactionDto) {
     try {
-      const { term, paymentMethod, amount, productId, userId } =
-        createTransactionDto;
+      const { term, amount, productId, userId } = createTransactionDto;
 
-      if (!term || !paymentMethod || !amount || !productId || !userId) {
+      if (!term || !amount || !productId || !userId) {
         throw new BadRequestException(
           response(false, 'Please fill your fields correctly', null),
         );
@@ -95,11 +94,20 @@ export class TransactionService {
   }
 
   //read:admin
-  async findAll() {
+  async findAll(query: any) {
     try {
-      const result = await this.transactionsRepository.find({
-        relations: ['user', 'product'],
-      });
+      const { productId } = query; // Extract optional filters from query params
+
+      const queryBuilder = this.transactionsRepository
+        .createQueryBuilder('transaction')
+        .leftJoinAndSelect('transaction.user', 'user')
+        .leftJoinAndSelect('transaction.product', 'product');
+
+      if (productId) {
+        queryBuilder.andWhere('product.id = :productId', { productId });
+      }
+
+      const result = await queryBuilder.getMany();
 
       return response(true, 'Transactions fetched', result);
     } catch (error) {
@@ -181,8 +189,8 @@ export class TransactionService {
 
   //midtrans
   async handlePaymentNotification(notification: any) {
-    const { order_id, transaction_status } = notification;
-
+    const { order_id, transaction_status, payment_type } = notification;
+    console.log(notification);
     const transaction = await this.transactionsRepository.findOne({
       where: { id: +order_id },
     });
@@ -190,6 +198,8 @@ export class TransactionService {
     if (!transaction) {
       throw new NotFoundException('Transaction not found');
     }
+
+    transaction.paymentMethod = payment_type;
 
     if (transaction_status === 'settlement') {
       transaction.paymentStatus = PaymentStatus.SUCCESS;
