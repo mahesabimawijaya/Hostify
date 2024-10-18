@@ -8,7 +8,7 @@ export default function Dashboard() {
   const user = useAppSelector((state) => state.auth);
   const router = useRouter();
 
-  if (user?.role !== "user") {
+  if (user?.role !== "admin") {
     router.push("/");
   }
   return (

@@ -9,7 +9,6 @@ const dropdown = [1, 12, 24, 48];
 
 const Dropdown: React.FC<DropdownProps> = ({ setDuration }) => {
   const [isActive, setIsActive] = useState(false);
-  console.log(isActive);
   return (
     <div
       onClick={() => {

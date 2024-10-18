@@ -1,5 +1,6 @@
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
+
 import {
   Column,
   CreateDateColumn,
@@ -16,8 +17,8 @@ export enum PaymentStatus {
 
 @Entity()
 export class Transaction {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   term: number;
