@@ -96,3 +96,12 @@ export interface IWhyUsCard {
   description: string;
   image: Image;
 }
+
+export interface NavbarData {
+  logo: Image;
+  logoText: string;
+  loginBtn: string;
+  signUpBtn: string;
+  linkInfo: string;
+  linkProduct: string;
+}

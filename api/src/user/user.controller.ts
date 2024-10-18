@@ -25,7 +25,7 @@ export class UserController {
   register(@Body() createUserDto: CreateUserDto) {
     return this.userService.register(createUserDto);
   }
-  @Post('login')
+  @Post('v2')
   // used Response from express to set cookie
   async login(@Body() loginUserDto: LoginUserDto, @Res() res: Response) {
     try {

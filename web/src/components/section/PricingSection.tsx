@@ -32,12 +32,20 @@ const PricingSection: React.FC<PricingSectionProps> = ({ pricingSection }) => {
 
   return (
     <>
-      <section className="w-full h-[700px] relative flex flex-col pt-20 bg-gray-100">
-        <h2 className="text-[36px] font-bold text-center mb-10">{pricingSection.title}</h2>
-        <p className="mx-auto text-center text-[18px] w-[732px]">{pricingSection.description}</p>
+      <section className="w-full h-[700px] relative flex flex-col pt-20 bg-[#F7F3FF]">
+        <h2 className="text-[36px] font-bold text-center mb-10">
+          {pricingSection.title}
+        </h2>
+        <p className="mx-auto text-center text-[18px] w-[732px]">
+          {pricingSection.description}
+        </p>
         <div className="absolute top-[320px] lg:px-[130px] flex flex-wrap justify-between w-full h-[777px]">
           {products.map((product, i) => (
-            <PricingCard product={product} purchaseBtn={pricingSection.purchaseBtn} key={i} />
+            <PricingCard
+              product={product}
+              purchaseBtn={pricingSection.purchaseBtn}
+              key={i}
+            />
           ))}
         </div>
       </section>
