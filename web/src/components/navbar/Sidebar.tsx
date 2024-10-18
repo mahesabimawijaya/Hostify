@@ -27,7 +27,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="flex z-50 tracking-tighter">
+    <div className="flex z-50">
       <span
         className="sticky lg:hidden text-gray-600 text-4xl cursor-pointer"
         onClick={toggleSidebar}
