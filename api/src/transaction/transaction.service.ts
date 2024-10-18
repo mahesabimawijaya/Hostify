@@ -117,7 +117,7 @@ export class TransactionService {
   }
 
   //read:user
-  async findAllByUserId(id: number) {
+  async findAllByUserId(id: number, query: any) {
     try {
       const existedUser = await this.usersRepository.findOne({
         where: {
@@ -129,14 +129,25 @@ export class TransactionService {
         throw new NotFoundException(response(false, 'User not found', null));
       }
 
-      const result = await this.transactionsRepository.find({
-        where: {
-          user: existedUser,
-        },
-        relations: ['product'],
+      const { productId } = query; // Extract optional filters from query params
+
+      // Construct the where condition for the transaction
+      const whereCondition: any = {
+        user: { id }, // User's ID in the transaction
+      };
+
+      // If productId is provided, add it to the where condition
+      if (productId) {
+        whereCondition.product = { id: productId };
+      }
+
+      // Find all transactions that match the conditions
+      const transactions = await this.transactionsRepository.find({
+        where: whereCondition,
+        relations: ['product'], // Include the related product
       });
 
-      return response(true, 'Transactions fetched', result);
+      return response(true, 'Transactions fetched', transactions);
     } catch (error) {
       console.error('Error fetching transaction:', error);
       if (error instanceof NotFoundException) {
@@ -146,7 +157,7 @@ export class TransactionService {
     }
   }
 
-  async update(id: number, updateTransactionDto: UpdateTransactionDto) {
+  async update(id: string, updateTransactionDto: UpdateTransactionDto) {
     try {
       const { paymentStatus } = updateTransactionDto;
 
@@ -190,10 +201,10 @@ export class TransactionService {
   //midtrans
   async handlePaymentNotification(notification: any) {
     const { order_id, transaction_status, payment_type } = notification;
-    console.log(notification);
     const transaction = await this.transactionsRepository.findOne({
-      where: { id: +order_id },
+      where: { id: order_id },
     });
+    console.log(transaction);
 
     if (!transaction) {
       throw new NotFoundException('Transaction not found');
@@ -213,7 +224,7 @@ export class TransactionService {
     return { message: 'Transaction status updated' };
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     try {
       const data = await this.transactionsRepository.findOne({
         where: {

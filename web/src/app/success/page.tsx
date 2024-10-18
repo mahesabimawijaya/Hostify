@@ -1,19 +1,27 @@
-import Link from "next/link";
+"use client";
 
-const page = () => {
-  return (
-    <div className="flex flex-col justify-center items-center w-full h-screen">
-      <h2 className="text-2xl mb-2">
-        Payment <span className="text-green-600">Success</span>
-      </h2>
-      <h2 className="text-4xl font-semibold mb-20">
-        THANK YOU FOR USING OUR SERVICE
-      </h2>
-      <Link href={"http://localhost:3000"} className="hover:underline text-lg">
-        Back to Home
-      </Link>
-    </div>
-  );
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
+
+const Page = () => {
+  const router = useRouter();
+  useEffect(() => {
+    Swal.fire({
+      title: "Payment Success",
+      text: "Thank you for using our service",
+      icon: "success",
+      confirmButtonText: "Back to Home",
+      allowOutsideClick: false, // Disable outside click to dismiss the alert
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Only redirect if the user clicks the confirm button
+        router.push("http://localhost:3000");
+      }
+    });
+  }, [router]);
+
+  return <div className="flex flex-col justify-center items-center w-full h-screen"></div>;
 };
 
-export default page;
+export default Page;

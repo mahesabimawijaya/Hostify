@@ -57,9 +57,7 @@ const Navbar: React.FC = () => {
   }
 
   // if image undefined, hardcoding img
-  const logoUrl = navbarData?.logo?.data?.attributes?.url
-    ? `${process.env.NEXT_PUBLIC_CMS_IMAGE_URL}${navbarData.logo.data.attributes.url}`
-    : "/hostify.png";
+  const logoUrl = navbarData?.logo?.data?.attributes?.url ? `${process.env.NEXT_PUBLIC_CMS_IMAGE_URL}${navbarData.logo.data.attributes.url}` : "/hostify.png";
 
   // console.log(logoUrl);
 
@@ -67,16 +65,8 @@ const Navbar: React.FC = () => {
     <nav className=" w-full max-w-[1112px] mx-auto pt-[40px] bg-white">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          <div className=" relative w-[48px] h-[48px] mr-[10px]">
-            {logoUrl ? (
-              <Image src={logoUrl} fill alt="logo" />
-            ) : (
-              <div>No Logo</div>
-            )}
-          </div>
-          <h1 className="font-extrabold text-[30px] tracking-tight">
-            {navbarData.logoText}
-          </h1>
+          <div className=" relative w-[48px] h-[48px] mr-[10px]">{logoUrl ? <Image src={logoUrl} fill alt="logo" /> : <div>No Logo</div>}</div>
+          <h1 className="font-extrabold text-[30px] tracking-tight">{navbarData.logoText}</h1>
         </div>
         <div className="flex gap-[30px] text-[16px]">
           <button className="">{navbarData.linkProduct}</button>
@@ -84,10 +74,7 @@ const Navbar: React.FC = () => {
 
           {loggedinUser.firstName ? (
             <div className="flex items-center gap-[30px]">
-              <button
-                className="uppercase text-primary font-bold"
-                onClick={handleLogout}
-              >
+              <button className="uppercase text-primary font-bold" onClick={handleLogout}>
                 Log Out
               </button>
               <button
@@ -99,10 +86,7 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <>
-              <button
-                className="uppercase text-primary font-bold"
-                onClick={() => router.push("/login")}
-              >
+              <button className="uppercase text-primary font-bold" onClick={() => router.push("/login")}>
                 {navbarData.loginBtn}
               </button>
               <button

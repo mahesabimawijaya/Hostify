@@ -35,9 +35,9 @@ export class TransactionController {
   }
 
   // /transaction/id
-  @Get(':id')
-  async findAllByUserId(@Param('id') id: string) {
-    return this.transactionService.findAllByUserId(+id);
+  @Get('user/:id')
+  async findAllByUserId(@Param('id') id: string, @Query() query: any) {
+    return this.transactionService.findAllByUserId(+id, query);
   }
 
   // /transaction/id
@@ -46,12 +46,12 @@ export class TransactionController {
     @Param('id') id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
   ) {
-    return this.transactionService.update(+id, updateTransactionDto);
+    return this.transactionService.update(id, updateTransactionDto);
   }
 
   // /transaction/id
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return this.transactionService.delete(+id);
+    return this.transactionService.delete(id);
   }
 }
