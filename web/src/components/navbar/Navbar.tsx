@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "@/lib/axios";
 import { NavbarData } from "@/types/asset";
 import Image from "next/image";
-// import Button from "../ui/Button";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { logout } from "@/lib/redux/user.slice";
@@ -48,13 +47,13 @@ const Navbar: React.FC = () => {
     fetchNavbarData();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (!navbarData) {
-    return <div>No data</div>;
-  }
+  // if (!navbarData) {
+  //   return <div>No data</div>;
+  // }
 
   // if image undefined, hardcoding img
   const logoUrl = navbarData?.logo?.data?.attributes?.url
@@ -75,12 +74,12 @@ const Navbar: React.FC = () => {
             )}
           </div>
           <h1 className="font-extrabold text-[30px] tracking-tight">
-            {navbarData.logoText}
+            {navbarData?.logoText}
           </h1>
         </div>
         <div className="flex gap-[30px] text-[16px]">
-          <button className="">{navbarData.linkProduct}</button>
-          <button className="">{navbarData.linkInfo}</button>
+          <button className="">{navbarData?.linkProduct}</button>
+          <button className="">{navbarData?.linkInfo}</button>
 
           {loggedinUser.firstName ? (
             <div className="flex items-center gap-[30px]">
@@ -91,10 +90,16 @@ const Navbar: React.FC = () => {
                 Log Out
               </button>
               <button
-                onClick={() => router.push("/dashboard")}
-                className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary text-bold uppercase duration-150 rounded p-3"
+                onClick={() => {
+                  if (loggedinUser?.role === "admin") {
+                    router.push("/dashboard");
+                  } else {
+                    router.push("/profile");
+                  }
+                }}
+                className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary font-bold uppercase duration-150 rounded p-3"
               >
-                Dashboard
+                {loggedinUser?.role === "admin" ? "Dashboard" : "Profile"}{" "}
               </button>
             </div>
           ) : (
@@ -103,13 +108,13 @@ const Navbar: React.FC = () => {
                 className="uppercase text-primary font-bold"
                 onClick={() => router.push("/login")}
               >
-                {navbarData.loginBtn}
+                {navbarData?.loginBtn}
               </button>
               <button
                 onClick={() => router.push("/register")}
                 className="bg-primary text-white hover:bg-transparent hover:text-primary border border-primary text-bold uppercase duration-150 rounded p-3"
               >
-                {navbarData.signUpBtn}
+                {navbarData?.signUpBtn}
               </button>
             </>
           )}

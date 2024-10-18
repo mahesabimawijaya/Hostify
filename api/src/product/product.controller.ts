@@ -42,8 +42,6 @@ export class ProductController {
     return this.productService.update(+id, updateProductDto);
   }
 
-  @UseGuards(AuthMiddleware)
-  @UseGuards(AdminMiddleware)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
