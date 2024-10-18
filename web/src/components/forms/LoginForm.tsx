@@ -39,9 +39,9 @@ const LoginForm: React.FC = () => {
           } as UserLoginPayload)
         );
         formik.resetForm();
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } catch (error) {
         if (error instanceof AxiosError) {
           toast.error(
@@ -108,7 +108,7 @@ const LoginForm: React.FC = () => {
         <div className="mx-auto">
           <button
             className="bg-[#6C41FF] text-white hover:bg-white hover:text-[#6C41FF] border border-primary text-bold uppercase duration-150 w-[154px] h-[52px] rounded"
-            disabled={!formik.isValid}
+            disabled={!formik.isValid || isSubmitting}
           >
             SIGN IN
           </button>
