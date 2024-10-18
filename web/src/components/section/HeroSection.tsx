@@ -7,7 +7,7 @@ interface HeroSectionProps {
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ heroSection }) => {
-  const imageUrl = "http://localhost:1337" + heroSection.image.data.attributes.formats.large.url;
+  const imageUrl = process.env.NEXT_PUBLIC_CMS_IMAGE_URL + heroSection.image.data.attributes.formats.large.url;
   return (
     <section className="w-full h-screen flex items-center max-w-[1112px] mx-auto pt-[60px] mb-10">
       <div className="flex flex-col">
