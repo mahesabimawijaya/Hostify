@@ -1,5 +1,15 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface ListList extends Schema.Component {
+  collectionName: 'components_list_lists';
+  info: {
+    displayName: 'List';
+  };
+  attributes: {
+    list: Attribute.String;
+  };
+}
+
 export interface LandingPageWhyUsSection extends Schema.Component {
   collectionName: 'components_landing_page_why_us_sections';
   info: {
@@ -42,16 +52,6 @@ export interface LandingPageHeroSection extends Schema.Component {
   };
 }
 
-export interface ListList extends Schema.Component {
-  collectionName: 'components_list_lists';
-  info: {
-    displayName: 'List';
-  };
-  attributes: {
-    list: Attribute.String;
-  };
-}
-
 export interface CardsWhyUsCard extends Schema.Component {
   collectionName: 'components_cards_why_us_cards';
   info: {
@@ -67,10 +67,10 @@ export interface CardsWhyUsCard extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'list.list': ListList;
       'landing-page.why-us-section': LandingPageWhyUsSection;
       'landing-page.pricing-section': LandingPagePricingSection;
       'landing-page.hero-section': LandingPageHeroSection;
-      'list.list': ListList;
       'cards.why-us-card': CardsWhyUsCard;
     }
   }

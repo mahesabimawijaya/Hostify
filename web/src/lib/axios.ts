@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 const getBaseUrl = (baseUrlType: "cms" | "api") => {
   if (baseUrlType === "cms") {
@@ -8,6 +9,8 @@ const getBaseUrl = (baseUrlType: "cms" | "api") => {
   }
   throw new Error("Invalid base URL type");
 };
+
+const token = getCookie("access_token") || "";
 
 export const createAxiosInstance = (baseUrlType: "cms" | "api") => {
   const baseURL = getBaseUrl(baseUrlType);
@@ -29,6 +32,7 @@ export const createData = async (
     const response = await api.post(endpoint, data, {
       headers: {
         "Content-Type": contentType,
+        Authorization: "Bearer " + token,
       },
     });
     return response;
@@ -65,6 +69,7 @@ export const updateData = async (
     const response = await api.patch(endpoint, data, {
       headers: {
         "Content-Type": contentType,
+        Authorization: "Bearer " + token,
       },
     });
     return response;
