@@ -19,6 +19,9 @@ const populate = {
     pricingSection: {
       populate: "*",
     },
+    serviceSection: {
+      populate: "*",
+    },
   },
 };
 

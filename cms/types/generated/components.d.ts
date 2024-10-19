@@ -24,6 +24,20 @@ export interface LandingPageWhyUsSection extends Schema.Component {
   };
 }
 
+export interface LandingPageServiceSection extends Schema.Component {
+  collectionName: 'components_landing_page_service_sections';
+  info: {
+    displayName: 'Service Section';
+    description: '';
+  };
+  attributes: {
+    image: Attribute.Media<'images'> & Attribute.Required;
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text & Attribute.Required;
+    learnBtn: Attribute.String & Attribute.Required;
+  };
+}
+
 export interface LandingPagePricingSection extends Schema.Component {
   collectionName: 'components_landing_page_pricing_sections';
   info: {
@@ -69,6 +83,7 @@ declare module '@strapi/types' {
     export interface Components {
       'list.list': ListList;
       'landing-page.why-us-section': LandingPageWhyUsSection;
+      'landing-page.service-section': LandingPageServiceSection;
       'landing-page.pricing-section': LandingPagePricingSection;
       'landing-page.hero-section': LandingPageHeroSection;
       'cards.why-us-card': CardsWhyUsCard;

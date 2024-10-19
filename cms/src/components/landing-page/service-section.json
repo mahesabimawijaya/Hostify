@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_landing_page_service_sections",
+  "info": {
+    "displayName": "Service Section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "learnBtn": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
