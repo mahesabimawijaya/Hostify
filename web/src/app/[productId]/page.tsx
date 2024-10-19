@@ -10,8 +10,13 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../hooks";
 import { User } from "../../../models/user.model";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/footer/Footer";
 
-export default function ProductDetail({ params }: { params: { productId: string } }) {
+export default function ProductDetail({
+  params,
+}: {
+  params: { productId: string };
+}) {
   const [product, setProduct] = useState<Product | null>(null);
   const [duration, setDuration] = useState(12);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,12 +69,19 @@ export default function ProductDetail({ params }: { params: { productId: string 
   return (
     <>
       <Navbar />
-      <div className="w-full h-screen bg-gray-100">
+      <div className="w-full pb-20 bg-gray-100">
         <div className="w-full flex flex-col max-w-[1112px] mx-auto pt-[80px] mb-10">
-          <h1 className="text-5xl font-semibold text-primary mb-8">Your Cart</h1>
+          <h1 className="text-5xl font-semibold text-primary mb-8">
+            Your Cart
+          </h1>
           <div className="flex items-start justify-between">
-            <div id="product-card" className="flex flex-col w-[726px] h-[240px] bg-white rounded shadow-xl p-[24px]">
-              <h3 className="text-3xl font-semibold tracking-wide mb-5">Hosting {product?.name}</h3>
+            <div
+              id="product-card"
+              className="flex flex-col w-[726px] h-[240px] bg-white rounded shadow-xl p-[24px]"
+            >
+              <h3 className="text-3xl font-semibold tracking-wide mb-5">
+                Hosting {product?.name}
+              </h3>
               <hr />
               <div className="flex items-start mt-8">
                 <div className="flex items-center">
@@ -78,15 +90,29 @@ export default function ProductDetail({ params }: { params: { productId: string 
                     {duration} {duration! > 1 ? "months" : "month"}
                   </p>
                 </div>
-                <div id="product-info" className="flex flex-wrap ml-3 w-[400px]">
-                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary">{product?.storage} GB</div>
-                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary">{product?.totalVisit} Total Visit</div>
-                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary">{product?.totalWeb} Total Website</div>
-                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary capitalize">{product?.backup} backup</div>
+                <div
+                  id="product-info"
+                  className="flex flex-wrap ml-3 w-[400px]"
+                >
+                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary">
+                    {product?.storage} GB
+                  </div>
+                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary">
+                    {product?.totalVisit} Total Visit
+                  </div>
+                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary">
+                    {product?.totalWeb} Total Website
+                  </div>
+                  <div className="border mr-2 mb-2 px-3 py-1 rounded-full border-primary text-primary capitalize">
+                    {product?.backup} backup
+                  </div>
                 </div>
               </div>
             </div>
-            <div id="checkout-card" className="flex flex-col justify-between p-[24px] w-[300px] h-[200px] shadow-xl bg-white">
+            <div
+              id="checkout-card"
+              className="flex flex-col justify-between p-[24px] w-[300px] h-[200px] shadow-xl bg-white"
+            >
               <div className="flex flex-col">
                 <h4 className="font-semibold text-xl mb-3">Subtotal</h4>
                 <h2 className="text-3xl">{toRupiah(subtotal!)}</h2>
@@ -102,6 +128,7 @@ export default function ProductDetail({ params }: { params: { productId: string 
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

@@ -3,9 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { User, UserLoginPayload } from "@/types/user";
 import { deleteCookie, getCookie } from "cookies-next";
-// import { Dispatch } from "@reduxjs/toolkit";
-// import { setAuthCookie } from "../cookie";
-// import { jwtDecode } from "jwt-decode";
 
 export const userSlice = createSlice({
   name: "auth",

@@ -8,12 +8,8 @@ import Image from "next/image";
 
 function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const dispatch = useAppDispatch();
-
   const router = useRouter();
-
   const user = useAppSelector((state) => state.auth);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -54,15 +50,15 @@ function Sidebar() {
 
         <hr />
 
-        <div className="p-2.5 my-3 flex  text-black">
-          <div className="ml-4 text-left">
-            <h1 className="text-[15px] font-semibold">Admin</h1>
-            <h1 className="text-[15px]">{user?.email}</h1>
+        {user?.role === "admin" && (
+          <div className="p-2.5 my-3 flex text-black">
+            <div className="ml-4 text-left">
+              <h1 className="text-[15px] font-semibold">Admin</h1>
+              <h1 className="text-[15px]">{user?.email}</h1>
+            </div>
           </div>
-        </div>
+        )}
         <hr />
-
-        {/* home */}
         <div
           onClick={handleHome}
           className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer hover:bg-zinc-300 text-black"
@@ -75,28 +71,51 @@ function Sidebar() {
           </span>
         </div>
 
-        {/* order list */}
-        <div className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer hover:bg-zinc-300 text-black">
-          <Image src="/order.svg" width={20} height={20} alt="order" />
-          <span className="text-[15px] ml-4 font-semibold text-black ">
-            Order List
-          </span>
-        </div>
+        {/* links */}
+        {user?.role === "admin" ? (
+          <>
+            <div className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer hover:bg-zinc-300 text-black">
+              <Image src="/order.svg" width={20} height={20} alt="order" />
+              <span className="text-[15px] ml-4 font-semibold text-black ">
+                Order List
+              </span>
+            </div>
 
-        {/* settings */}
-        <div className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer  hover:bg-zinc-300  text-black">
-          <Image src="/account.svg" width={20} height={20} alt="home" />
-          <span className="text-[15px] ml-4 text-black font-semibold">
-            Account Information
-          </span>
-        </div>
+            <div className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer hover:bg-zinc-300 text-black">
+              <Image src="/account.svg" width={20} height={20} alt="account" />
+              <span className="text-[15px] ml-4 font-semibold text-black">
+                Account Information
+              </span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer hover:bg-zinc-300 text-black">
+              <Image
+                src="/subs.svg"
+                width={20}
+                height={20}
+                alt="subscription"
+              />
+              <span className="text-[15px] ml-4 font-semibold text-black ">
+                Subscription List
+              </span>
+            </div>
 
-        {/* logout */}
+            <div className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer hover:bg-zinc-300 text-black">
+              <Image src="/order.svg" width={20} height={20} alt="billing" />
+              <span className="text-[15px] ml-4 font-semibold text-black">
+                Billing
+              </span>
+            </div>
+          </>
+        )}
+
         <div
-          className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer  hover:bg-zinc-300  text-black"
+          className="p-2.5 mt-3 flex items-center rounded-full px-4 duration-300 cursor-pointer hover:bg-zinc-300 text-black"
           onClick={handleLogout}
         >
-          <span className="text-[15px]  text-black font-semibold">Log out</span>
+          <span className="text-[15px] text-black font-semibold">Log out</span>
         </div>
       </div>
     </div>

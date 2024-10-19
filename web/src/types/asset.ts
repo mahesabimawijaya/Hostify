@@ -15,6 +15,23 @@ export interface PurpleAttributes {
   heroSection: IHeroSection;
   whyUsSection: IWhyUsSection;
   pricingSection: IPricingSection;
+  serviceSection: IServiceSection;
+  reviewSection: IReviewSection;
+}
+
+export interface IReviewSection {
+  trustTitle: string;
+  logoOne: Image;
+  logoTwo: Image;
+  logoThree: Image;
+  logoFour: Image;
+  title: string;
+  review: string;
+  writerName: string;
+  writerCompany: string;
+  mapTitle: string;
+  mapDescription: string;
+  mapImage: Image;
 }
 
 export interface IHeroSection {
@@ -23,6 +40,14 @@ export interface IHeroSection {
   description: string;
   button1: string;
   button2: string;
+  image: Image;
+}
+
+export interface IServiceSection {
+  id: number;
+  title: string;
+  description: string;
+  learnBtn: string;
   image: Image;
 }
 

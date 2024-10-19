@@ -1,16 +1,19 @@
 "use client";
 import LoginForm from "@/components/forms/LoginForm";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppSelector } from "../hooks";
 import { useRouter } from "next/navigation";
+// import "../../global.css";
 
 function LoginPage() {
   const user = useAppSelector((state) => state.auth);
   const router = useRouter();
 
-  if (user?.id) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (user?.id) {
+      router.push("/");
+    }
+  }, [user]);
 
   return (
     <>
