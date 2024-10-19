@@ -12,11 +12,13 @@ import { fetchData } from "@/lib/axios";
 import {
   IHeroSection,
   IPricingSection,
+  IReviewSection,
   IServiceSection,
   IWhyUsSection,
   PurpleAttributes,
 } from "@/types/asset";
 import { useEffect, useState } from "react";
+import ReviewSection from "@/components/section/ReviewSection";
 
 export default function Home() {
   const [asset, setAsset] = useState<PurpleAttributes | null>(null);
@@ -49,6 +51,7 @@ export default function Home() {
       <ServiceSection
         serviceSection={asset?.serviceSection as IServiceSection}
       />
+      <ReviewSection reviewSection={asset?.reviewSection as IReviewSection} />
       <Footer />
     </>
   );

@@ -22,6 +22,9 @@ const populate = {
     serviceSection: {
       populate: "*",
     },
+    reviewSection: {
+      populate: "*",
+    },
   },
 };
 

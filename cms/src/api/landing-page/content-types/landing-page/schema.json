@@ -35,6 +35,11 @@
       "repeatable": false,
       "component": "landing-page.service-section",
       "required": true
+    },
+    "reviewSection": {
+      "type": "component",
+      "repeatable": false,
+      "component": "landing-page.review-section"
     }
   }
 }
