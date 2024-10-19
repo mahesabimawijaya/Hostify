@@ -25,6 +25,10 @@ const Profile = () => {
   const loggedinUser = useAppSelector((state) => state.auth) as User;
   const dispatch = useAppDispatch();
 
+  if (!loggedinUser.id || loggedinUser.role !== "user") {
+    router.push("/");
+  }
+
   const handleLogout = () => {
     dispatch(logout());
     router.push("/");
