@@ -7,6 +7,7 @@ import PricingSection from "@/components/section/PricingSection";
 import ServiceSection from "@/components/section/ServiceSection";
 import WhyUsSection from "@/components/section/WhyUsSection";
 import Loading from "@/components/ui/Loading";
+import "./globals.css";
 import { fetchData } from "@/lib/axios";
 import {
   IHeroSection,

@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bs-primary: #6c41ff;
+}
+
+.btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+a.btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}

@@ -6,15 +6,16 @@ import { User, UserLoginPayload } from "@/types/user";
 import { deleteCookie, getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export const userLogin = ({ email, password }: UserLoginPayload) => {
   return async (dispatch: Dispatch) => {
     try {
-      const api = createAxiosInstance("api");
-      const response = await api.post(
+      const response = await createData(
+        "api",
         "users/v2",
         { email, password },
-        { withCredentials: true }
+        "application/json"
       );
 
       if (response.data.success) {
@@ -29,32 +30,35 @@ export const userLogin = ({ email, password }: UserLoginPayload) => {
 
         return { role: data.role, message: response.data.message };
       } else {
-        toast.error(response.data.message || "An unexpected error occurred.");
+        Swal.fire({
+          icon: "error",
+          title: "Login failed",
+          text: response.data.message || "An unexpected error occurred.",
+          confirmButtonText: "Try Again",
+        });
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         const errorMessage =
           err.response?.data.message || "An unexpected error occurred.";
-        toast.error(errorMessage);
+
+        Swal.fire({
+          icon: "error",
+          title: "Login error",
+          text: errorMessage,
+          confirmButtonText: "Try again",
+        });
       } else {
-        toast.error("An unexpected error occurred.");
+        Swal.fire({
+          icon: "error",
+          title: "Unexpected error",
+          text: "An unexpected error occurred.",
+          confirmButtonText: "Try again",
+        });
       }
     }
   };
 };
-
-// export const keepLogin = () => {
-//   return async (dispatch: Dispatch) => {
-//     try {
-//       const token = getCookie("access_token");
-//       if (token) {
-//         dispatch(login(jwtDecode(token)));
-//       }
-//     } catch (err: any) {
-//       deleteCookie("access_token");
-//     }
-//   };
-// };
 
 export const keepLogin = () => {
   return async (dispatch: Dispatch) => {
