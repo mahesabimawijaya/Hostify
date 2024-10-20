@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/navbar/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import Dropdown from "@/components/ui/Dropdown";
 import Loading from "@/components/ui/Loading";
 import { createData, fetchData } from "@/lib/axios";
@@ -10,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../hooks";
 import { User } from "../../../models/user.model";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/footer/Footer";
 
 export default function ProductDetail({ params }: { params: { productId: string } }) {
   const [product, setProduct] = useState<Product | null>(null);
@@ -64,7 +66,7 @@ export default function ProductDetail({ params }: { params: { productId: string 
   return (
     <>
       <Navbar />
-      <div className="w-full h-screen bg-gray-100">
+      <div className="w-full pb-20 bg-gray-100">
         <div className="w-full flex flex-col max-w-[1112px] mx-auto pt-[80px] mb-10">
           <h1 className="text-5xl font-semibold text-primary mb-8">Your Cart</h1>
           <div className="flex items-start justify-between">
@@ -102,6 +104,7 @@ export default function ProductDetail({ params }: { params: { productId: string 
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

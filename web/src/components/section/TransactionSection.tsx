@@ -46,12 +46,12 @@ const TransactionSection = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <section className=" bg-[#F7F3FF] p-3 sm:p-5 xl:pb-[300px]">
-      <div className="mx-auto max-w-screen-xl px-4 lg:px-12 pt-16">
+    <section className=" bg-[#F7F3FF] sm:p-5 xl:pb-[300px]">
+      <div className="mx-auto  max-w-[1112px] pt-16">
         <h1 className="font-semibold text-xl">All transactions</h1>
         {/* <hr /> */}
         {/* start coding here */}
-        <div className="bg-white  relative shadow-xl sm:rounded-lg overflow-hidden mt-5">
+        <div className="bg-white  relative border-2 border-zinc-200 sm:rounded-lg overflow-hidden mt-5">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
             <div className="w-full md:w-1/2">
               <h2 className="text-2xl font-semibold text-primary">Transaction</h2>
@@ -133,6 +133,9 @@ const TransactionSection = () => {
                     <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap capitalize">
                       {transaction.product.name}
                     </th>
+                    <td className="px-4 py-3">
+                      {transaction.term} {transaction.term > 1 ? "months" : "month"}
+                    </td>
                     <td className="px-4 py-3">
                       {transaction.term} {transaction.term > 1 ? "months" : "month"}
                     </td>

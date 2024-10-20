@@ -64,7 +64,7 @@ function AdminProductCard({ onEdit }: AdminProductCardProps) {
 
   return (
     <div
-      className="flex flex-wrap gap-8 tracking-tight bg-[#F7F3FF] mx-auto overflow-x-auto
+      className="flex flex-wrap gap-8 bg-[#F7F3FF] mx-auto overflow-x-auto
     "
     >
       {products.length < 1 ? (

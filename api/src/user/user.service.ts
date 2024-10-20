@@ -62,10 +62,11 @@ export class UserService {
     } catch (error) {
       console.error('Login service error:', error);
       if (error instanceof ConflictException) {
-        throw new InternalServerErrorException(
-          response(false, 'Registration failed. Try again later!', null),
-        );
+        throw error;
       }
+      throw new InternalServerErrorException(
+        response(false, 'Registration failed. Try again later!', null),
+      );
     }
   }
 
@@ -82,7 +83,7 @@ export class UserService {
       const user = await this.userRepository.findOne({ where: { email } });
 
       if (!user) {
-        throw new UnauthorizedException(
+        throw new BadRequestException(
           response(false, 'Email or password is invalid!', null),
         );
       }
@@ -90,7 +91,7 @@ export class UserService {
       const isPasswordValid = await comparePassword(user.password, password);
 
       if (!isPasswordValid) {
-        throw new UnauthorizedException(
+        throw new BadRequestException(
           response(false, 'Email or password is invalid!', null),
         );
       }
@@ -112,11 +113,11 @@ export class UserService {
         refreshToken,
       };
     } catch (error) {
-      if (error instanceof UnauthorizedException) {
+      if (error instanceof BadRequestException) {
         throw error;
       }
 
-      throw new UnauthorizedException(response(false, 'Login failed', null));
+      throw new BadRequestException(response(false, 'Login failed', null));
     }
   }
 

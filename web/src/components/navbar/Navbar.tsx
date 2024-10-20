@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
   // console.log(logoUrl);
 
   return (
-    <nav className=" w-full max-w-[1112px] mx-auto pt-[40px] bg-white">
+    <nav className=" w-full max-w-[1112px] mx-auto py-[40px] bg-white">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <div className=" relative w-[48px] h-[48px] mr-[10px]">{logoUrl ? <Image src={logoUrl} fill alt="logo" /> : <div>No Logo</div>}</div>

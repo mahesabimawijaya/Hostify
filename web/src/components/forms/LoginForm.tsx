@@ -4,12 +4,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import { userLogin } from "@/lib/redux/auth.middleware";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { UserLoginPayload } from "@/types/user";
 import Link from "next/link";
 import { AxiosError } from "axios";
 import { useAppDispatch } from "@/app/hooks";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +26,9 @@ const LoginForm: React.FC = () => {
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
-      password: Yup.string().required("Password is required"),
+      password: Yup.string()
+        .required("Password is required")
+        .min(5, "Password should have 5 characters at minimum"),
     }),
     onSubmit: async (values) => {
       setIsSubmitting(true);
@@ -38,18 +39,29 @@ const LoginForm: React.FC = () => {
             password: values.password,
           } as UserLoginPayload)
         );
+
         formik.resetForm();
+
         setTimeout(() => {
           window.location.reload();
         }, 2000);
       } catch (error) {
-        if (error instanceof AxiosError) {
-          toast.error(
-            error.response?.data.message ||
-              "An error occurred while signing in."
-          );
+        if (error instanceof AxiosError && error.response) {
+          Swal.fire({
+            icon: "error",
+            title: "Login Failed",
+            text:
+              error.response.data.message ||
+              "An error occurred while signing in.",
+            confirmButtonText: "Try Again",
+          });
         } else {
-          toast.error("An unexpected error occurred.");
+          Swal.fire({
+            icon: "error",
+            title: "Unexpected Error",
+            text: "An unexpected error occurred.",
+            confirmButtonText: "Try Again",
+          });
         }
       } finally {
         setIsSubmitting(false);
@@ -58,7 +70,7 @@ const LoginForm: React.FC = () => {
   });
 
   return (
-    <div className=" mx-auto text-center py-20 px-10 gap-4 flex flex-col items-center justify-center ">
+    <div className="mx-auto text-center py-20 px-10 gap-4 flex flex-col items-center justify-center ">
       {/* header */}
       <div className="gap-2 flex items-center justify-center flex-col">
         <Link href="/">
@@ -73,42 +85,61 @@ const LoginForm: React.FC = () => {
       {/* form */}
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col w-60 lg:w-[500px] "
+        className="flex flex-col w-60 lg:w-[500px]"
       >
-        <div className="form-floating w-full">
+        <div className="flex flex-col mb-4">
+          <label htmlFor="email" className="text-left mb-1">
+            Email Address
+          </label>
           <input
             type="email"
-            className="form-control mb-2"
-            id="floatingInput"
-            placeholder="name@example.com"
+            id="email"
+            className={`border rounded-md p-2 ${
+              formik.touched.email && formik.errors.email
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+            placeholder="your@email.com"
             {...formik.getFieldProps("email")}
           />
-          <label htmlFor="floatingInput">Email address</label>
+          {formik.touched.email && formik.errors.email ? (
+            <div className="text-red-700 text-xs mt-1">
+              {formik.errors.email}
+            </div>
+          ) : null}
         </div>
-        {formik.touched.email && formik.errors.email ? (
-          <div className="text-red-700 text-xs mb-3">{formik.errors.email}</div>
-        ) : null}
 
-        <div className="form-floating w-full">
+        <div className="flex flex-col mb-4">
+          <label htmlFor="password" className="text-left mb-1">
+            Password
+          </label>
           <input
             type="password"
-            className="form-control mb-2"
-            id="floatingPassword"
+            id="password"
+            className={`border rounded-md p-2 ${
+              formik.touched.password && formik.errors.password
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
             placeholder="•••••••"
             {...formik.getFieldProps("password")}
           />
-          <label htmlFor="floatingPassword">Password</label>
+          {formik.touched.password && formik.errors.password ? (
+            <div className="text-red-700 text-xs mt-1">
+              {formik.errors.password}
+            </div>
+          ) : null}
         </div>
-        {formik.touched.password && formik.errors.password ? (
-          <div className="text-red-700 text-xs mb-3">
-            {formik.errors.password}
-          </div>
-        ) : null}
 
         <div className="mx-auto">
           <button
-            className="bg-[#6C41FF] text-white hover:bg-white hover:text-[#6C41FF] border border-primary text-bold uppercase duration-150 w-[154px] h-[52px] rounded"
-            disabled={!formik.isValid || isSubmitting}
+            type="submit"
+            className={`bg-[#6C41FF] text-white hover:bg-white hover:text-[#6C41FF] border border-primary text-bold uppercase duration-150 w-[154px] h-[52px] rounded ${
+              !formik.isValid || !formik.dirty || isSubmitting
+                ? "opacity-70 cursor-not-allowed"
+                : ""
+            }`}
+            disabled={!formik.isValid || !formik.dirty || isSubmitting}
           >
             SIGN IN
           </button>

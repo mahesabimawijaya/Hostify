@@ -25,6 +25,10 @@ const Profile = () => {
   const loggedinUser = useAppSelector((state) => state.auth) as User;
   const dispatch = useAppDispatch();
 
+  if (!loggedinUser.id || loggedinUser.role !== "user") {
+    router.push("/");
+  }
+
   const handleLogout = () => {
     dispatch(logout());
     router.push("/");
@@ -60,16 +64,15 @@ const Profile = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <section className="bg-gray-100  p-3 sm:p-5 xl:pb-[300px]">
+    <section className="bg-[#F7F3FF]  p-3 sm:p-5 xl:pb-[300px] h-screen">
       <div className="mx-auto max-w-screen-xl px-4 lg:px-12 pt-[10px]">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl mb-5 mt-10">Your Profile</h1>
-          <button onClick={handleLogout} className="px-5 py-2 bg-red-600 text-white rounded hover:opacity-80">
+          <button onClick={handleLogout} className="px-5 py-2 bg-red-600 text-white rounded hover:opacity-80 lg:hidden">
             Logout
           </button>
         </div>
-        <hr />
-        <div className="flex items-center mt-5 bg-white p-6 rounded-full shadow-lg">
+
+        <div className="flex items-center mt-5 bg-white p-6 rounded-full border border-zinc-200">
           <div className="relative w-20 h-20">
             <Image src={"/profile-user.png"} fill alt="profile" />
           </div>
@@ -78,10 +81,11 @@ const Profile = () => {
             <h4 className="text-gray-500">{loggedinUser.email}</h4>
           </div>
         </div>
-        <h1 className="text-3xl mb-5 mt-14">Your Transaction History</h1>
-        <hr />
+
+        <h1 className="font-semibold text-xl mb-5 mt-14">Your transaction history</h1>
+
         {/* start coding here */}
-        <div className="bg-white  relative shadow-xl sm:rounded-lg overflow-hidden mt-5">
+        <div className="bg-white  relative border border-zinc-200 sm:rounded-lg overflow-hidden mt-5">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
             <div className="w-full md:w-1/2">
               <h2 className="text-2xl font-semibold text-primary">Transaction</h2>

@@ -1,0 +1,78 @@
+{
+  "collectionName": "components_landing_page_review_sections",
+  "info": {
+    "displayName": "Review Section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "trustTitle": {
+      "type": "string",
+      "required": true
+    },
+    "logoOne": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "logoTwo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "logoThree": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "review": {
+      "type": "text",
+      "required": true
+    },
+    "writerName": {
+      "type": "string",
+      "required": true
+    },
+    "writerCompany": {
+      "type": "string",
+      "required": true
+    },
+    "logoFour": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mapTitle": {
+      "type": "string",
+      "required": true
+    },
+    "mapDescription": {
+      "type": "text",
+      "required": true
+    },
+    "mapImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}
