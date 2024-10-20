@@ -9,11 +9,13 @@ import { createData } from "@/lib/axios";
 interface CreateProductModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onProductCreated: (product: any) => void;
 }
 
 const CreateProductModal: React.FC<CreateProductModalProps> = ({
   isOpen,
   onClose,
+  onProductCreated,
 }) => {
   const initialValues = {
     name: "",
@@ -48,11 +50,9 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
   });
 
   const handleSubmit = async (values: typeof initialValues) => {
-    onClose();
-
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: `You are about to create a new plan!`,
+      text: `You are about to create a new product!`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes!",
@@ -67,9 +67,8 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
           values,
           "application/json"
         );
-
+        onProductCreated(response.data.data);
         await Swal.fire("Success!", "Plan created successfully!", "success");
-        window.location.reload();
       } catch (error: any) {
         const errorMessage =
           error.response?.data?.message || "Failed to create a plan.";
