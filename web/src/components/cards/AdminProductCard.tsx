@@ -1,72 +1,29 @@
 "use client";
 
-import { deleteData, fetchData } from "@/lib/axios";
 import { Product } from "@/types/product";
-import { useEffect, useState } from "react";
-import Loading from "../ui/Loading";
 import Image from "next/image";
 import { toRupiah } from "@/utils/helper";
-import Swal from "sweetalert2";
+import { useState } from "react";
 
 interface AdminProductCardProps {
+  products: Product[];
   onEdit: (productId: number) => void;
+  onDelete: (productId: number) => void;
 }
 
-function AdminProductCard({ onEdit }: AdminProductCardProps) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+function AdminProductCard({
+  products,
+  onEdit,
+  onDelete,
+}: AdminProductCardProps) {
   const [dropdownVisible, setDropdownVisible] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data } = await fetchData("api", "products");
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
 
   const toggleDropdown = (productId: number) => {
     setDropdownVisible((prev) => (prev === productId ? null : productId));
   };
 
-  const handleDelete = async (productId: number) => {
-    const confirmed = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete the plan!",
-    });
-
-    if (confirmed.isConfirmed) {
-      try {
-        await deleteData("api", `products/${productId}`);
-        setProducts((prev) =>
-          prev.filter((product) => product.id !== productId)
-        );
-        Swal.fire("Deleted!", "Your plan has been deleted.", "success");
-      } catch (error) {
-        console.error("Error deleting plan:", error);
-        Swal.fire("Error!", "There was a problem deleting the plan.", "error");
-      }
-    }
-  };
-
-  if (isLoading) return <Loading />;
-
   return (
-    <div
-      className="flex flex-wrap gap-8 bg-[#F7F3FF] mx-auto overflow-x-auto
-    "
-    >
+    <div className="flex flex-wrap gap-8 bg-[#F7F3FF] mx-auto overflow-x-auto">
       {products.length < 1 ? (
         <p className="text-lg font-semibold text-center mt-8">
           No plans yet. Add a new plan!
@@ -97,7 +54,7 @@ function AdminProductCard({ onEdit }: AdminProductCardProps) {
                     </p>
                     <p
                       className="text-sm text-center px-10 py-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => handleDelete(product.id)}
+                      onClick={() => onDelete(product.id)}
                     >
                       Delete
                     </p>

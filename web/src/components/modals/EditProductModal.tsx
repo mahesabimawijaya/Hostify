@@ -8,14 +8,16 @@ import { Product } from "@/types/product";
 
 interface EditProductModalProps {
   isOpen: boolean;
+  productId: number;
   onClose: () => void;
-  productId: string | null;
+  onProductUpdate: (updatedProduct: Product) => void;
 }
 
 const EditProductModal: React.FC<EditProductModalProps> = ({
   isOpen,
   onClose,
   productId,
+  onProductUpdate,
 }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Product name is required"),
@@ -51,8 +53,6 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
     },
     validationSchema,
     onSubmit: async (values) => {
-      onClose();
-
       const result = await Swal.fire({
         title: "Are you sure?",
         text: `You are about to edit this plan!`,
@@ -64,14 +64,21 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
 
       if (result.isConfirmed) {
         try {
-          await updateData(
+          const response = await updateData(
             "api",
             `products/${productId}`,
             values,
             "application/json"
           );
+
+          const updatedProduct = response.data.data;
+
+          // fetching latest data
+          await fetchProductData();
+
           await Swal.fire("Success!", "Plan updated successfully!", "success");
-          window.location.reload();
+          onProductUpdate(updatedProduct); // fetch product list in parent comp
+          onClose();
         } catch (error: any) {
           const errorMessage =
             error.response?.data?.message || "Failed to update the plan.";
@@ -140,7 +147,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             )}
           </div>
 
-          {/* Description */}
+          {/* description */}
           <div className="mb-4">
             <label
               htmlFor="description"
@@ -164,9 +171,9 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             )}
           </div>
 
-          {/* Storage & Backup */}
+          {/* storage & Backup */}
           <div className="flex w-full justify-between gap-4">
-            {/* Storage */}
+            {/* storage */}
             <div className="mb-4 w-1/2">
               <label
                 htmlFor="storage"
@@ -189,7 +196,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
               )}
             </div>
 
-            {/* Backup Frequency */}
+            {/* backup */}
             <div className="mb-4 w-1/2">
               <label
                 htmlFor="backup"
@@ -218,9 +225,9 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             </div>
           </div>
 
-          {/* Price & Term */}
+          {/* price term  */}
           <div className="flex w-full justify-between gap-4">
-            {/* Price */}
+            {/* price */}
             <div className="mb-4 w-1/2">
               <label
                 htmlFor="price"
@@ -243,7 +250,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
               )}
             </div>
 
-            {/* Term */}
+            {/* term */}
             <div className="mb-4 w-1/2">
               <label
                 htmlFor="term"
@@ -265,7 +272,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             </div>
           </div>
 
-          {/* Total Web & Total Visit */}
+          {/* total web & visit */}
           <div className="flex w-full justify-between gap-4">
             {/* Total Websites */}
             <div className="mb-4 w-1/2">
@@ -290,7 +297,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
               )}
             </div>
 
-            {/* Total Visits */}
+            {/* visits */}
             <div className="mb-4 w-1/2">
               <label
                 htmlFor="totalVisit"
@@ -314,7 +321,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/*  button */}
           <div className="flex gap-4 justify-center">
             <button
               type="button"
