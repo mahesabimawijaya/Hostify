@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/navbar/Navbar";
-import Navbar from "@/components/navbar/Navbar";
 import Dropdown from "@/components/ui/Dropdown";
 import Loading from "@/components/ui/Loading";
 import { createData, fetchData } from "@/lib/axios";
