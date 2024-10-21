@@ -1,0 +1,101 @@
+{
+  "kind": "singleType",
+  "collectionName": "footers",
+  "info": {
+    "singularName": "footer",
+    "pluralName": "footers",
+    "displayName": "Footer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "logoText": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "iconEmail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "iconPhone": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "phone": {
+      "type": "string"
+    },
+    "titleService": {
+      "type": "string",
+      "required": true
+    },
+    "serviceList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "list.list"
+    },
+    "aboutUsList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "list.list"
+    },
+    "addressTitle": {
+      "type": "string",
+      "required": true
+    },
+    "street": {
+      "type": "string",
+      "required": true
+    },
+    "area": {
+      "type": "string",
+      "required": true
+    },
+    "socialOne": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "socialTwo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "aboutUsTitle": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

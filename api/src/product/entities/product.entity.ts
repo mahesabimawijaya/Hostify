@@ -1,9 +1,9 @@
 import { Transaction } from 'src/transaction/entities/transaction.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-enum Backup {
-  WEEKLY = 'weekly',
-  DAILY = 'daily',
+export enum Backup {
+  weekly = 'weekly',
+  daily = 'daily',
 }
 
 @Entity()

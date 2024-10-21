@@ -1,5 +1,6 @@
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
+
 import {
   Column,
   CreateDateColumn,
@@ -7,11 +8,6 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
-export enum PaymentMethod {
-  QRIS = 'qris',
-  BCAVA = 'BCA Virtual Account',
-}
 
 export enum PaymentStatus {
   PENDING = 'pending',
@@ -21,8 +17,8 @@ export enum PaymentStatus {
 
 @Entity()
 export class Transaction {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   term: number;
@@ -30,8 +26,8 @@ export class Transaction {
   @Column('decimal', { precision: 10, scale: 0 })
   amount: number;
 
-  @Column({ type: 'enum', enum: PaymentMethod })
-  paymentMethod: PaymentMethod;
+  @Column({ nullable: true })
+  paymentMethod: string | null;
 
   @Column({
     type: 'enum',
